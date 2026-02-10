@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>מעבדת הכפל של שנות ה־80</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0b1a;
+      --bg-alt: #11112a;
+      --neon-pink: #ff4fd8;
+      --neon-blue: #4fd4ff;
+      --neon-green: #6dff8b;
+      --neon-yellow: #ffe45c;
+      --card: #1a1a3a;
+      --card-glow: rgba(79, 212, 255, 0.25);
+      --text: #f7f3ff;
+      --muted: #b8b2d6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Rubik", sans-serif;
+      background: radial-gradient(circle at top, #1a1a3a, var(--bg));
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .grid-background {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(79, 212, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79, 212, 255, 0.1) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.25;
+      z-index: -2;
+      transform: perspective(600px) rotateX(55deg);
+      transform-origin: top;
+    }
+
+    .glow-orb {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 79, 216, 0.6), transparent 70%);
+      filter: blur(8px);
+      z-index: -1;
+      animation: float 10s ease-in-out infinite;
+    }
+
+    .glow-orb.blue {
+      background: radial-gradient(circle, rgba(79, 212, 255, 0.5), transparent 70%);
+      width: 220px;
+      height: 220px;
+      animation-delay: -3s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(20px); }
+    }
+
+    header {
+      padding: 48px 6vw 24px;
+      text-align: center;
+    }
+
+    .logo {
+      font-family: "Press Start 2P", monospace;
+      font-size: clamp(1.2rem, 2.8vw, 2.2rem);
+      color: var(--neon-yellow);
+      text-shadow: 0 0 12px rgba(255, 228, 92, 0.6);
+      margin-bottom: 18px;
+    }
+
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      background: linear-gradient(145deg, rgba(255, 79, 216, 0.12), rgba(79, 212, 255, 0.12));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      animation: pop 1s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.98); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      margin-bottom: 16px;
+      color: var(--neon-pink);
+      text-shadow: 0 0 16px rgba(255, 79, 216, 0.5);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .section {
+      padding: 32px 6vw;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      margin-bottom: 18px;
+      color: var(--neon-blue);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title span {
+      font-size: 0.9rem;
+      color: var(--neon-yellow);
+      background: rgba(255, 228, 92, 0.12);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 228, 92, 0.3);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 0 20px var(--card-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(circle, rgba(109, 255, 139, 0.12), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: var(--neon-green);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .storyline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .story {
+      padding: 18px;
+      border-radius: 16px;
+      background: linear-gradient(120deg, rgba(255, 79, 216, 0.18), rgba(79, 212, 255, 0.12));
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+    }
+
+    .story strong {
+      color: var(--neon-yellow);
+    }
+
+    .exercise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .exercise {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .exercise .equation {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--neon-blue);
+    }
+
+    .exercise input {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .exercise button {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 600;
+      background: var(--neon-pink);
+      color: #111;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .exercise button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(255, 79, 216, 0.3);
+    }
+
+    .feedback {
+      min-height: 22px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 18px;
+      background: rgba(17, 17, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .toolbar button {
+      background: var(--neon-green);
+      color: #0b0b1a;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .toolbar p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 6vw 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .neon-line {
+      height: 3px;
+      width: 120px;
+      margin: 18px auto 0;
+      background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-pink), transparent);
+      border-radius: 999px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding-top: 36px;
+      }
+
+      .hero {
+        padding: 24px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-background" aria-hidden="true"></div>
+  <div class="glow-orb" style="top: 80px; right: 6%;"></div>
+  <div class="glow-orb blue" style="bottom: 120px; left: 6%;"></div>
+
+  <header>
+    <div class="logo">ARCade Math Lab</div>
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">כפול זה מגניב כמו מכונת זמן</h1>
+      <p>
+        ברוכים הבאים למעבדת הכפל של שנות ה־80! היום נתחיל עם כפל פשוט, ממש כמו
+        שדוק בראון היה אומר: "כשיש לך קבוצה של דברים שוב ושוב" — זו חזרה חכמה
+        שמכפילים. מוכנים לצאת לציד רוחות של תרגילים?
+      </p>
+      <div class="neon-line" aria-hidden="true"></div>
+    </section>
+  </header>
+
+  <main>
+    <section class="section" aria-labelledby="explain-title">
+      <h2 class="section-title" id="explain-title">מה זה כפל? <span>הסבר קצר</span></h2>
+      <div class="cards">
+        <article class="card">
+          <h3>כפל = חיבור חוזר</h3>
+          <p>
+            אם יש לנו 3 קבוצות של 4, זה בעצם 4 + 4 + 4. במקום לכתוב את זה בכל פעם,
+            אנחנו כותבים 3 × 4.
+          </p>
+        </article>
+        <article class="card">
+          <h3>דמיינו ציד רוחות</h3>
+          <p>
+            בכל מלכודת רוחות יש 5 רוחות. אם יש 2 מלכודות, כמה רוחות? 2 × 5.
+            פשוט, נכון?
+          </p>
+        </article>
+        <article class="card">
+          <h3>קצב של סינתיסייזר</h3>
+          <p>
+            כפל עוזר לנו לספור בקצב קבוע: 2, 4, 6, 8... זה כמו ביט של שנות ה־80.
+          </p>
+        </article>
+      </div>
+
+      <div class="storyline">
+        <div class="story">
+          <strong>Stranger Things:</strong> בכל שער יש 3 פנסים זוהרים. אם יש 4
+          שערים — כמה פנסים? 4 × 3.
+        </div>
+        <div class="story">
+          <strong>Back to the Future:</strong> כל דלק טורבינות צריך 6 יחידות
+          אנרגיה. יש 3 טורבינות — 3 × 6.
+        </div>
+        <div class="story">
+          <strong>Ghostbusters:</strong> בכל תרמיל פרוטון יש 7 תאים טעונים. אם יש
+          2 תרמילים — 2 × 7.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="practice-title">
+      <h2 class="section-title" id="practice-title">תרגול קצר <span>המשימות של היום</span></h2>
+      <div class="toolbar">
+        <p>מלאו את התשובה ולחצו "בדיקה". רוצים עוד תרגילים? לחצו למטה.</p>
+      </div>
+
+      <div class="exercise-grid" id="exerciseGrid"></div>
+      <div class="toolbar">
+        <button id="refresh">עוד תרגילים</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    טיפ של גיבורים: כפל לא מפחיד — הוא פשוט דרך מהירה לספור קבוצות. נתראה במשימה הבאה!
+  </footer>
+
+  <script>
+    const grid = document.getElementById("exerciseGrid");
+    const refreshBtn = document.getElementById("refresh");
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function createProblem() {
+      const a = rand(2, 9);
+      const b = rand(2, 9);
+      return { a, b, answer: a * b };
+    }
+
+    function renderExercises({ append } = {}) {
+      if (!append) {
+        grid.innerHTML = "";
+      }
+      const problems = Array.from({ length: 4 }, createProblem);
+
+      problems.forEach((problem, index) => {
+        const card = document.createElement("div");
+        card.className = "exercise";
+
+        card.innerHTML = `
+          <div class="equation">${problem.a} × ${problem.b} = ?</div>
+          <input type="number" inputmode="numeric" aria-label="תרגיל ${index + 1}" />
+          <button type="button">בדיקה</button>
+          <div class="feedback" aria-live="polite"></div>
+        `;
+
+        const input = card.querySelector("input");
+        const button = card.querySelector("button");
+        const feedback = card.querySelector(".feedback");
+
+        button.addEventListener("click", () => {
+          const value = Number(input.value);
+          if (!input.value) {
+            feedback.textContent = "הכניסו תשובה ואז בדקו.";
+            feedback.style.color = "var(--neon-yellow)";
+            return;
+          }
+          if (value === problem.answer) {
+            feedback.textContent = "כל הכבוד! תפסתם את התשובה.";
+            feedback.style.color = "var(--neon-green)";
+          } else {
+            feedback.textContent = `כמעט! נסו שוב. רמז: ${problem.a} קבוצות של ${problem.b}.`;
+            feedback.style.color = "var(--neon-pink)";
+          }
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    refreshBtn.addEventListener("click", () => renderExercises({ append: true }));
+
+    renderExercises();
+  </script>
+</body>
+</html>
