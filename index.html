@@ -429,7 +429,7 @@
   <header>
     <div class="logo">ARCade Math Lab</div>
     <div class="version-badge" aria-label="גרסה נוכחית">
-      גרסה <span>0.3.0</span>
+      גרסה <span id="versionBadge">0.3.0</span>
     </div>
     <section class="hero" aria-labelledby="hero-title">
       <h1 id="hero-title">כפול זה מגניב כמו מכונת זמן</h1>
@@ -603,6 +603,7 @@
     const grids = Array.from(document.querySelectorAll(".exercise-grid"));
     const moreButtons = Array.from(document.querySelectorAll(".more-btn"));
     const celebrateLayer = document.getElementById("celebrateLayer");
+    const versionBadge = document.getElementById("versionBadge");
     let audioCtx;
 
     const celebrationMessages = [
@@ -728,6 +729,8 @@
             feedback.classList.add("positive");
             celebrate(card, message);
             playSound();
+            button.disabled = true;
+            button.textContent = "נבדק!";
           } else {
             feedback.textContent = `כמעט! נסו שוב. רמז: ${problem.a} קבוצות של ${problem.b}.`;
             feedback.style.color = "var(--neon-pink)";
@@ -750,6 +753,17 @@
     });
 
     grids.forEach((grid) => renderExercises(grid));
+
+    fetch("./CHANGELOG.md")
+      .then((res) => (res.ok ? res.text() : null))
+      .then((text) => {
+        if (!text) return;
+        const match = text.match(/## \\[(\\d+\\.\\d+\\.\\d+)\\]/);
+        if (match && versionBadge) {
+          versionBadge.textContent = match[1];
+        }
+      })
+      .catch(() => {});
 
     function celebrate(card, message) {
       const rect = card.getBoundingClientRect();
