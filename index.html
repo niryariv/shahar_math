@@ -250,6 +250,97 @@
       color: var(--muted);
     }
 
+    .feedback.positive {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--neon-green);
+      text-shadow: 0 0 10px rgba(109, 255, 139, 0.6);
+      animation: feedback-pop 500ms ease-out;
+    }
+
+    @keyframes feedback-pop {
+      0% { transform: scale(0.96); opacity: 0.6; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .celebrate-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .celebrate-burst {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      animation: burst 900ms ease-out forwards;
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    .celebrate-burst::after {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      opacity: 0.5;
+    }
+
+    .celebrate-toast {
+      position: absolute;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 1rem;
+      background: rgba(17, 17, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--neon-yellow);
+      text-shadow: 0 0 8px rgba(255, 228, 92, 0.6);
+      animation: toast 1600ms ease-out forwards;
+    }
+
+    .celebrate-toast.big {
+      font-size: 1.15rem;
+      font-weight: 800;
+      padding: 14px 22px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 22px rgba(255, 79, 216, 0.35);
+    }
+
+    .celebrate-toast.alt {
+      color: var(--neon-blue);
+      text-shadow: 0 0 10px rgba(79, 212, 255, 0.6);
+    }
+
+    .celebrate-sticker {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      animation: sticker 1200ms ease-out forwards;
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
+    }
+
+    @keyframes burst {
+      0% { transform: translate(0, 0) scale(0.6); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(1.2); opacity: 0; }
+    }
+
+    @keyframes toast {
+      0% { transform: translateY(12px) scale(0.96); opacity: 0; }
+      15% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translateY(-8px) scale(1.02); opacity: 0; }
+    }
+
+    @keyframes sticker {
+      0% { transform: translateY(10px) scale(0.6) rotate(-6deg); opacity: 0; }
+      20% { opacity: 1; }
+      70% { opacity: 1; }
+      100% { transform: translateY(-12px) scale(1.05) rotate(8deg); opacity: 0; }
+    }
+
     .toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -370,14 +461,110 @@
     </section>
 
     <section class="section" aria-labelledby="practice-title">
-      <h2 class="section-title" id="practice-title">תרגול קצר <span>המשימות של היום</span></h2>
+      <h2 class="section-title" id="practice-title">תרגול כפל <span>המשימות של היום</span></h2>
       <div class="toolbar">
         <p>מלאו את התשובה ולחצו "בדיקה". רוצים עוד תרגילים? לחצו למטה.</p>
       </div>
 
-      <div class="exercise-grid" id="exerciseGrid"></div>
+      <div class="exercise-grid" id="exercise-mul" data-op="mul"></div>
       <div class="toolbar">
-        <button id="refresh">עוד תרגילים</button>
+        <button class="more-btn" data-op="mul">עוד תרגילים</button>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="add-title">
+      <h2 class="section-title" id="add-title">חיבור זה כוח <span>קצב מהיר</span></h2>
+      <div class="cards">
+        <article class="card">
+          <h3>חיבור = איסוף יחד</h3>
+          <p>אם יש 6 צעצועים ועוד 3, פשוט מחברים: 6 + 3.</p>
+        </article>
+        <article class="card">
+          <h3>ניאון ומספרים</h3>
+          <p>חיבור הוא כמו להדליק עוד נורות ניאון על אותו קיר.</p>
+        </article>
+        <article class="card">
+          <h3>קפיצה קדימה</h3>
+          <p>על ציר המספרים אנחנו קופצים קדימה כמה צעדים.</p>
+        </article>
+      </div>
+
+      <div class="storyline">
+        <div class="story"><strong>Ghostbusters:</strong> מצאו 4 רוחות ועוד 5 — כמה יחד?</div>
+        <div class="story"><strong>Back to the Future:</strong> יש 7 חלקים ועוד 2, כמה חסרים?</div>
+        <div class="story"><strong>Stranger Things:</strong> 3 פנסים ועוד 6 על הקיר.</div>
+      </div>
+
+      <div class="toolbar">
+        <p>תרגול חיבור קצר. מלאו תשובה וקבלו עוד משימות.</p>
+      </div>
+      <div class="exercise-grid" id="exercise-add" data-op="add"></div>
+      <div class="toolbar">
+        <button class="more-btn" data-op="add">עוד תרגילים</button>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sub-title">
+      <h2 class="section-title" id="sub-title">חיסור זה סוד <span>לכו אחורה</span></h2>
+      <div class="cards">
+        <article class="card">
+          <h3>חיסור = להוציא</h3>
+          <p>אם היו 9 ומשכנו 4, נשארו 5. זה 9 − 4.</p>
+        </article>
+        <article class="card">
+          <h3>כמו סליל קלטות</h3>
+          <p>מסובבים את הסליל אחורה, וזה בדיוק החיסור.</p>
+        </article>
+        <article class="card">
+          <h3>בדיקת מציאות</h3>
+          <p>חיסור עוזר לראות כמה נשאר אחרי פעולה.</p>
+        </article>
+      </div>
+
+      <div class="storyline">
+        <div class="story"><strong>Ghostbusters:</strong> היו 8 רוחות, 3 נלכדו — כמה נשארו?</div>
+        <div class="story"><strong>Back to the Future:</strong> היו 10 חלקים, 6 הותקנו.</div>
+        <div class="story"><strong>Stranger Things:</strong> 12 פנסים, 5 כבו.</div>
+      </div>
+
+      <div class="toolbar">
+        <p>תרגול חיסור. זכרו: אנחנו זזים אחורה.</p>
+      </div>
+      <div class="exercise-grid" id="exercise-sub" data-op="sub"></div>
+      <div class="toolbar">
+        <button class="more-btn" data-op="sub">עוד תרגילים</button>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="div-title">
+      <h2 class="section-title" id="div-title">חילוק זה חלוקה הוגנת <span>שותפים</span></h2>
+      <div class="cards">
+        <article class="card">
+          <h3>חילוק = לשתף</h3>
+          <p>אם יש 12 מטבעות ל־3 חברים, כל אחד מקבל 4.</p>
+        </article>
+        <article class="card">
+          <h3>חילוק הפוך מכפל</h3>
+          <p>אם 3 × 4 = 12, אז 12 ÷ 3 = 4.</p>
+        </article>
+        <article class="card">
+          <h3>קבוצות שוות</h3>
+          <p>בונים קבוצות שוות עד שנגמרים הפריטים.</p>
+        </article>
+      </div>
+
+      <div class="storyline">
+        <div class="story"><strong>Ghostbusters:</strong> 12 מלכודות ל־4 צוותים.</div>
+        <div class="story"><strong>Back to the Future:</strong> 18 סוללות ל־3 מכשירים.</div>
+        <div class="story"><strong>Stranger Things:</strong> 20 וופלים ל־5 חברים.</div>
+      </div>
+
+      <div class="toolbar">
+        <p>תרגול חילוק של מספרים שמתחלקים יפה.</p>
+      </div>
+      <div class="exercise-grid" id="exercise-div" data-op="div"></div>
+      <div class="toolbar">
+        <button class="more-btn" data-op="div">עוד תרגילים</button>
       </div>
     </section>
   </main>
@@ -386,33 +573,114 @@
     טיפ של גיבורים: כפל לא מפחיד — הוא פשוט דרך מהירה לספור קבוצות. נתראה במשימה הבאה!
   </footer>
 
+  <div class="celebrate-layer" id="celebrateLayer" aria-hidden="true"></div>
+
   <script>
-    const grid = document.getElementById("exerciseGrid");
-    const refreshBtn = document.getElementById("refresh");
+    const grids = Array.from(document.querySelectorAll(".exercise-grid"));
+    const moreButtons = Array.from(document.querySelectorAll(".more-btn"));
+    const celebrateLayer = document.getElementById("celebrateLayer");
+    let audioCtx;
+
+    const celebrationMessages = [
+      "אלוף! זה היה מדויק כמו חליפת רוחות.",
+      "וואו! קפצתם בזמן והגעתם לתשובה.",
+      "פגז! הקצב של שנות ה־80 איתכם.",
+      "מושלם! סינתיסייזר של ניצחון.",
+      "כוכב ארקייד! תפסתם את התשובה.",
+      "מדליק! כוח הפרוטון בשיא."
+    ];
+
+    const celebrationColors = [
+      "#ff4fd8",
+      "#4fd4ff",
+      "#6dff8b",
+      "#ffe45c",
+      "#b07bff"
+    ];
+
+    const stickerSvgs = [
+      ({ stroke, fill }) => `
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="54" width="80" height="28" rx="10" fill="${fill}" stroke="${stroke}" stroke-width="4"/>
+          <rect x="34" y="44" width="40" height="16" rx="6" fill="none" stroke="${stroke}" stroke-width="4"/>
+          <circle cx="38" cy="86" r="8" fill="#0b0b1a" stroke="${stroke}" stroke-width="4"/>
+          <circle cx="82" cy="86" r="8" fill="#0b0b1a" stroke="${stroke}" stroke-width="4"/>
+          <path d="M86 44 L104 52" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+          <path d="M18 68 L8 74" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      `,
+      ({ stroke, fill }) => `
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 42 Q60 18 88 42 V78 Q88 98 60 100 Q32 98 32 78 Z"
+            fill="${fill}" stroke="${stroke}" stroke-width="4"/>
+          <circle cx="48" cy="62" r="6" fill="#0b0b1a"/>
+          <circle cx="72" cy="62" r="6" fill="#0b0b1a"/>
+          <path d="M50 78 Q60 86 70 78" stroke="${stroke}" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>
+      `,
+      ({ stroke, fill }) => `
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="30" fill="${fill}" stroke="${stroke}" stroke-width="4"/>
+          <path d="M60 30 L60 6" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+          <path d="M30 60 L6 60" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+          <path d="M90 60 L114 60" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+          <path d="M60 90 L60 114" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="60" cy="60" r="10" fill="#0b0b1a"/>
+        </svg>
+      `,
+      ({ stroke, fill }) => `
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 70 Q60 14 100 70 Q60 104 20 70 Z" fill="${fill}" stroke="${stroke}" stroke-width="4"/>
+          <circle cx="46" cy="62" r="6" fill="#0b0b1a"/>
+          <circle cx="74" cy="62" r="6" fill="#0b0b1a"/>
+          <path d="M60 78 Q60 90 60 100" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      `
+    ];
+
+    const celebrationStyles = [
+      { toast: "big", burstCount: [22, 30] },
+      { toast: "alt", burstCount: [18, 26] },
+      { toast: "", burstCount: [20, 28] }
+    ];
 
     function rand(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    function createProblem() {
+    function createProblem(op) {
       const a = rand(2, 9);
       const b = rand(2, 9);
-      return { a, b, answer: a * b };
+      if (op === "add") {
+        return { a, b, sign: "+", answer: a + b };
+      }
+      if (op === "sub") {
+        const max = Math.max(a, b);
+        const min = Math.min(a, b);
+        return { a: max, b: min, sign: "−", answer: max - min };
+      }
+      if (op === "div") {
+        const divisor = rand(2, 9);
+        const quotient = rand(2, 9);
+        return { a: divisor * quotient, b: divisor, sign: "÷", answer: quotient };
+      }
+      return { a, b, sign: "×", answer: a * b };
     }
 
-    function renderExercises({ append } = {}) {
+    function renderExercises(grid, { append } = {}) {
       if (!append) {
         grid.innerHTML = "";
       }
-      const problems = Array.from({ length: 4 }, createProblem);
+      const op = grid.dataset.op;
+      const problems = Array.from({ length: 4 }, () => createProblem(op));
 
       problems.forEach((problem, index) => {
         const card = document.createElement("div");
         card.className = "exercise";
 
         card.innerHTML = `
-          <div class="equation">${problem.a} × ${problem.b} = ?</div>
-          <input type="number" inputmode="numeric" aria-label="תרגיל ${index + 1}" />
+          <div class="equation" dir="ltr">${problem.a}${problem.sign}${problem.b}=?</div>
+          <input type="text" inputmode="numeric" pattern="[0-9]*" aria-label="תרגיל ${index + 1}" />
           <button type="button">בדיקה</button>
           <div class="feedback" aria-live="polite"></div>
         `;
@@ -426,14 +694,20 @@
           if (!input.value) {
             feedback.textContent = "הכניסו תשובה ואז בדקו.";
             feedback.style.color = "var(--neon-yellow)";
+            feedback.classList.remove("positive");
             return;
           }
           if (value === problem.answer) {
-            feedback.textContent = "כל הכבוד! תפסתם את התשובה.";
+            const message = celebrationMessages[Math.floor(Math.random() * celebrationMessages.length)];
+            feedback.textContent = message;
             feedback.style.color = "var(--neon-green)";
+            feedback.classList.add("positive");
+            celebrate(card, message);
+            playSound();
           } else {
             feedback.textContent = `כמעט! נסו שוב. רמז: ${problem.a} קבוצות של ${problem.b}.`;
             feedback.style.color = "var(--neon-pink)";
+            feedback.classList.remove("positive");
           }
         });
 
@@ -441,9 +715,167 @@
       });
     }
 
-    refreshBtn.addEventListener("click", () => renderExercises({ append: true }));
+    moreButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const op = button.dataset.op;
+        const grid = grids.find((item) => item.dataset.op === op);
+        if (grid) {
+          renderExercises(grid, { append: true });
+        }
+      });
+    });
 
-    renderExercises();
+    grids.forEach((grid) => renderExercises(grid));
+
+    function celebrate(card, message) {
+      const rect = card.getBoundingClientRect();
+      const originX = rect.left + rect.width * (0.6 + Math.random() * 0.2);
+      const originY = rect.top + rect.height * (0.2 + Math.random() * 0.2);
+      const style = celebrationStyles[Math.floor(Math.random() * celebrationStyles.length)];
+      const [minBurst, maxBurst] = style.burstCount;
+      const burstCount = minBurst + Math.floor(Math.random() * (maxBurst - minBurst + 1));
+
+      for (let i = 0; i < burstCount; i += 1) {
+        const spark = document.createElement("div");
+        spark.className = "celebrate-burst";
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 40 + Math.random() * 80;
+        const color = celebrationColors[Math.floor(Math.random() * celebrationColors.length)];
+        spark.style.color = color;
+        spark.style.left = `${originX}px`;
+        spark.style.top = `${originY}px`;
+        spark.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+        spark.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+        celebrateLayer.appendChild(spark);
+        spark.addEventListener("animationend", () => spark.remove());
+      }
+
+      const toast = document.createElement("div");
+      toast.className = "celebrate-toast";
+      if (style.toast) {
+        toast.classList.add(style.toast);
+      }
+      toast.textContent = message;
+      const offsetX = -40 + Math.random() * 80;
+      const offsetY = -20 + Math.random() * 40;
+      toast.style.left = `${originX + offsetX}px`;
+      toast.style.top = `${originY + offsetY}px`;
+      toast.style.borderColor = "rgba(255, 255, 255, 0.35)";
+      toast.style.boxShadow = `0 0 18px ${celebrationColors[Math.floor(Math.random() * celebrationColors.length)]}55`;
+      celebrateLayer.appendChild(toast);
+      toast.addEventListener("animationend", () => toast.remove());
+
+      const sticker = document.createElement("div");
+      sticker.className = "celebrate-sticker";
+      const stroke = celebrationColors[Math.floor(Math.random() * celebrationColors.length)];
+      const fill = "rgba(17, 17, 42, 0.9)";
+      const svgTemplate = stickerSvgs[Math.floor(Math.random() * stickerSvgs.length)];
+      sticker.innerHTML = svgTemplate({ stroke, fill });
+      const stickerOffsetX = -70 + Math.random() * 140;
+      const stickerOffsetY = 10 + Math.random() * 40;
+      sticker.style.left = `${originX + stickerOffsetX}px`;
+      sticker.style.top = `${originY + stickerOffsetY}px`;
+      celebrateLayer.appendChild(sticker);
+      sticker.addEventListener("animationend", () => sticker.remove());
+    }
+
+    function playSound() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      const now = audioCtx.currentTime;
+      const variant = Math.floor(Math.random() * 4);
+
+      if (variant === 0) {
+        const osc = audioCtx.createOscillator();
+        const osc2 = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = "sawtooth";
+        osc2.type = "square";
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.18);
+        osc2.frequency.setValueAtTime(220, now);
+        osc2.frequency.exponentialRampToValueAtTime(330, now + 0.18);
+
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.08, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+
+        osc.connect(gain);
+        osc2.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc2.start(now);
+        osc.stop(now + 0.3);
+        osc2.stop(now + 0.3);
+      } else if (variant === 1) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(660, now);
+        osc.frequency.exponentialRampToValueAtTime(330, now + 0.12);
+
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.1, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.22);
+      } else if (variant === 2) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = "square";
+        osc.frequency.setValueAtTime(520, now);
+        osc.frequency.exponentialRampToValueAtTime(1040, now + 0.08);
+        osc.frequency.exponentialRampToValueAtTime(780, now + 0.16);
+
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.07, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.24);
+      } else {
+        const osc = audioCtx.createOscillator();
+        const lfo = audioCtx.createOscillator();
+        const lfoGain = audioCtx.createGain();
+        const gain = audioCtx.createGain();
+
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(700, now + 0.18);
+
+        lfo.type = "sine";
+        lfo.frequency.setValueAtTime(18, now);
+        lfoGain.gain.setValueAtTime(30, now);
+
+        lfo.connect(lfoGain);
+        lfoGain.connect(osc.frequency);
+
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.06, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        lfo.start(now);
+        osc.stop(now + 0.24);
+        lfo.stop(now + 0.24);
+      }
+    }
   </script>
 </body>
 </html>
