@@ -419,7 +419,31 @@
         align-items: flex-start;
       }
     }
-  </style>
+  
+  .open-lesson-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .open-lesson-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 7px 11px;
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--gold);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+</style>
 </head>
 <body>
   <div class="grid-background" aria-hidden="true"></div>
@@ -599,6 +623,11 @@
 
   <div class="celebrate-layer" id="celebrateLayer" aria-hidden="true"></div>
 
+  <nav class="open-lesson-links" aria-label="קישורי קוד פתוח">
+    <a href="https://niryariv.github.io/edu/">אינדקס edu</a>
+    <a href="https://github.com/niryariv/shahar_math">קוד מקור</a>
+    <a href="https://github.com/niryariv/edu/blob/main/prompts/lesson-builder.md">Prompt</a>
+  </nav>
   <script>
     const grids = Array.from(document.querySelectorAll(".exercise-grid"));
     const moreButtons = Array.from(document.querySelectorAll(".more-btn"));
